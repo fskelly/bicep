@@ -54,6 +54,18 @@
       ]
     },
     {
+      "type": "Microsoft.Authorization/locks",
+      "apiVersion": "2016-09-01",
+      "scope": "[extensionResourceId(format('Microsoft.Storage/storageAccounts/{0}', format('{0}single-resource-name', parameters('name'))), 'Microsoft.Authorization/locks', 'single-resource-lock')]",
+      "name": "single-resource-cascade-extension",
+      "properties": {
+        "level": "CanNotDelete"
+      },
+      "dependsOn": [
+        "[extensionResourceId(resourceId('Microsoft.Storage/storageAccounts', format('{0}single-resource-name', parameters('name'))), 'Microsoft.Authorization/locks', 'single-resource-lock')]"
+      ]
+    },
+    {
       "copy": {
         "name": "storageAccounts",
         "count": "[length(parameters('accounts'))]"
@@ -73,12 +85,45 @@
     {
       "type": "Microsoft.Authorization/locks",
       "apiVersion": "2016-09-01",
+      "scope": "[format('Microsoft.Storage/storageAccounts/{0}', format('{0}-collection-{1}', parameters('name'), parameters('accounts')[copyIndex()].name))]",
       "name": "one-resource-collection-item-lock",
       "properties": {
         "level": "ReadOnly"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', format('{0}-collection-{1}', parameters('name'), parameters('accounts')[mod(parameters('index'), 2)].name))]"
+      ]
+    },
+    {
+      "copy": {
+        "name": "extensionCollection",
+        "count": "[length(range(0, 1))]"
+      },
+      "type": "Microsoft.Authorization/locks",
+      "apiVersion": "2016-09-01",
+      "scope": "[format('Microsoft.Storage/storageAccounts/{0}', format('{0}single-resource-name', parameters('name')))]",
+      "name": "[format('lock-{0}', range(0, 1)[copyIndex()])]",
+      "properties": {
+        "level": "[if(equals(range(0, 1)[copyIndex()], 0), 'CanNotDelete', 'ReadOnly')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', format('{0}single-resource-name', parameters('name')))]"
+      ]
+    },
+    {
+      "copy": {
+        "name": "lockTheLocks",
+        "count": "[length(range(0, 1))]"
+      },
+      "type": "Microsoft.Authorization/locks",
+      "apiVersion": "2016-09-01",
+      "scope": "[extensionResourceId(format('Microsoft.Storage/storageAccounts/{0}', format('{0}single-resource-name', parameters('name'))), 'Microsoft.Authorization/locks', format('lock-{0}', range(0, 1)[copyIndex()]))]",
+      "name": "[format('lock-the-lock-{0}', range(0, 1)[copyIndex()])]",
+      "properties": {
+        "level": "[if(equals(range(0, 1)[copyIndex()], 0), 'CanNotDelete', 'ReadOnly')]"
+      },
+      "dependsOn": [
+        "[extensionResourceId(resourceId('Microsoft.Storage/storageAccounts', format('{0}single-resource-name', parameters('name'))), 'Microsoft.Authorization/locks', format('lock-{0}', range(0, 1)[range(0, 1)[copyIndex()]]))]"
       ]
     },
     {
@@ -431,8 +476,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.2.454.63276",
-      "templateHash": "1814591637808920447"
+      "version": "dev",
+      "templateHash": "17470455438705378084"
     }
   }
 }

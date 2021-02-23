@@ -46,7 +46,15 @@ namespace Bicep.Core.Emit
                 return null;
             }
 
-            var scopeSymbol = semanticModel.GetSymbolInfo(scopeProperty.Value);
+            var scopeSymbol = scopeProperty.Value switch
+            {
+                // scope indexing can only happen with references to module or resource collections
+                ArrayAccessSyntax { BaseExpression: VariableAccessSyntax baseVariableAccess } => semanticModel.GetSymbolInfo(baseVariableAccess),
+
+                // all other scope expressions
+                _ => semanticModel.GetSymbolInfo(scopeProperty.Value)
+            };
+                
             var scopeType = semanticModel.GetTypeInfo(scopeProperty.Value);
 
             switch (scopeType)
@@ -193,7 +201,7 @@ namespace Bicep.Core.Emit
                         throw new InvalidOperationException($"Cannot format resourceId with non-null resource scope symbol");
                     }
 
-                    var parentTypeReference = EmitHelpers.GetSingleResourceTypeReference(scopeData.ResourceScopeSymbol);
+                    var parentTypeReference = EmitHelpers.SingleResourceTypeReference(scopeData.ResourceScopeSymbol);
                     var parentResourceId = FormatFullyQualifiedResourceId(
                         context,
                         converter,
@@ -226,7 +234,7 @@ namespace Bicep.Core.Emit
                         throw new InvalidOperationException($"Cannot format resourceId with non-null resource scope symbol");
                     }
 
-                    var parentTypeReference = EmitHelpers.GetSingleResourceTypeReference(scopeData.ResourceScopeSymbol);
+                    var parentTypeReference = EmitHelpers.SingleResourceTypeReference(scopeData.ResourceScopeSymbol);
                     var parentResourceId = FormatUnqualifiedResourceId(
                         context,
                         converter,

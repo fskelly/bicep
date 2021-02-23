@@ -16,6 +16,26 @@ resource singleResource 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   }
 }
 
+// extension of single resource
+resource singleResourceExtension 'Microsoft.Authorization/locks@2016-09-01' = {
+//@[9:32) Resource singleResourceExtension. Type: Microsoft.Authorization/locks@2016-09-01. Declaration start char: 0, length: 182
+  scope: singleResource
+  name: 'single-resource-lock'
+  properties: {
+    level: 'CanNotDelete'
+  }
+}
+
+// single resource cascade extension
+resource singleResourceCascadeExtension 'Microsoft.Authorization/locks@2016-09-01' = {
+//@[9:39) Resource singleResourceCascadeExtension. Type: Microsoft.Authorization/locks@2016-09-01. Declaration start char: 0, length: 211
+  scope: singleResourceExtension
+  name: 'single-resource-cascade-extension'
+  properties: {
+    level: 'CanNotDelete'
+  }
+}
+
 // resource collection
 resource storageAccounts 'Microsoft.Storage/storageAccounts@2019-06-01' = [for account in accounts: {
 //@[79:86) Local account. Type: any. Declaration start char: 79, length: 7
@@ -29,6 +49,38 @@ resource storageAccounts 'Microsoft.Storage/storageAccounts@2019-06-01' = [for a
   dependsOn: [
     singleResource
   ]
+}]
+
+// extension of a single resource in a collection
+resource extendSingleResourceInCollection 'Microsoft.Authorization/locks@2016-09-01' = {
+//@[9:41) Resource extendSingleResourceInCollection. Type: Microsoft.Authorization/locks@2016-09-01. Declaration start char: 0, length: 212
+  name: 'one-resource-collection-item-lock'
+  properties: {
+    level: 'ReadOnly'
+  }
+  scope: storageAccounts[index % 2]
+}
+
+// collection of extensions
+resource extensionCollection 'Microsoft.Authorization/locks@2016-09-01' = [for i in range(0,1): {
+//@[79:80) Local i. Type: int. Declaration start char: 79, length: 1
+//@[9:28) Resource extensionCollection. Type: Microsoft.Authorization/locks@2016-09-01[]. Declaration start char: 0, length: 212
+  name: 'lock-${i}'
+  properties: {
+    level: i == 0 ? 'CanNotDelete' : 'ReadOnly'
+  }
+  scope: singleResource
+}]
+
+// cascade extend the extension
+resource lockTheLocks 'Microsoft.Authorization/locks@2016-09-01' = [for i in range(0,1): {
+//@[72:73) Local i. Type: int. Declaration start char: 72, length: 1
+//@[9:21) Resource lockTheLocks. Type: Microsoft.Authorization/locks@2016-09-01[]. Declaration start char: 0, length: 222
+  name: 'lock-the-lock-${i}'
+  properties: {
+    level: i == 0 ? 'CanNotDelete' : 'ReadOnly'
+  }
+  scope: extensionCollection[i]
 }]
 
 // special case property access

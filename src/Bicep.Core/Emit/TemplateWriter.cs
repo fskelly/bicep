@@ -310,25 +310,17 @@ namespace Bicep.Core.Emit
         {
             memoryWriter.WriteStartObject();
 
-            ResourceTypeReference? typeReference;
+            var typeReference = EmitHelpers.SingleResourceTypeReference(resourceSymbol);
             SyntaxBase body = resourceSymbol.DeclaringResource.Value;
             if (body is IfConditionSyntax ifCondition)
             {
                 body = ifCondition.Body;
-                typeReference = EmitHelpers.GetSingleResourceTypeReference(resourceSymbol);
-
                 emitter.EmitProperty("condition", ifCondition.ConditionExpression);
             }
             else if (body is ForSyntax @for)
             {
                 body = @for.Body;
-                typeReference = EmitHelpers.GetResourceCollectionTypeReference(resourceSymbol);
-
                 emitter.EmitProperty("copy", () => emitter.EmitCopyObject(resourceSymbol.Name, @for, input: null));
-            }
-            else
-            {
-                typeReference = EmitHelpers.GetSingleResourceTypeReference(resourceSymbol);
             }
 
             emitter.EmitProperty("type", typeReference.FullyQualifiedType);
@@ -401,15 +393,12 @@ namespace Bicep.Core.Emit
             {
                 case IfConditionSyntax ifCondition:
                     body = ifCondition.Body;
-                emitter.EmitProperty("condition", ifCondition.ConditionExpression);
-
+                    emitter.EmitProperty("condition", ifCondition.ConditionExpression);
                     break;
 
                 case ForSyntax @for:
                     body = @for.Body;
-
                     emitter.EmitProperty("copy", () => emitter.EmitCopyObject(moduleSymbol.Name, @for, input: null));
-
                     break;
             }
 

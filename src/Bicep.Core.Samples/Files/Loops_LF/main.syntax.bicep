@@ -94,6 +94,112 @@ resource singleResource 'Microsoft.Storage/storageAccounts@2019-06-01' = {
 //@[0:1)   RightBrace |}|
 //@[1:3) NewLine |\n\n|
 
+// extension of single resource
+//@[31:32) NewLine |\n|
+resource singleResourceExtension 'Microsoft.Authorization/locks@2016-09-01' = {
+//@[0:182) ResourceDeclarationSyntax
+//@[0:8)  Identifier |resource|
+//@[9:32)  IdentifierSyntax
+//@[9:32)   Identifier |singleResourceExtension|
+//@[33:75)  StringSyntax
+//@[33:75)   StringComplete |'Microsoft.Authorization/locks@2016-09-01'|
+//@[76:77)  Assignment |=|
+//@[78:182)  ObjectSyntax
+//@[78:79)   LeftBrace |{|
+//@[79:80)   NewLine |\n|
+  scope: singleResource
+//@[2:23)   ObjectPropertySyntax
+//@[2:7)    IdentifierSyntax
+//@[2:7)     Identifier |scope|
+//@[7:8)    Colon |:|
+//@[9:23)    VariableAccessSyntax
+//@[9:23)     IdentifierSyntax
+//@[9:23)      Identifier |singleResource|
+//@[23:24)   NewLine |\n|
+  name: 'single-resource-lock'
+//@[2:30)   ObjectPropertySyntax
+//@[2:6)    IdentifierSyntax
+//@[2:6)     Identifier |name|
+//@[6:7)    Colon |:|
+//@[8:30)    StringSyntax
+//@[8:30)     StringComplete |'single-resource-lock'|
+//@[30:31)   NewLine |\n|
+  properties: {
+//@[2:45)   ObjectPropertySyntax
+//@[2:12)    IdentifierSyntax
+//@[2:12)     Identifier |properties|
+//@[12:13)    Colon |:|
+//@[14:45)    ObjectSyntax
+//@[14:15)     LeftBrace |{|
+//@[15:16)     NewLine |\n|
+    level: 'CanNotDelete'
+//@[4:25)     ObjectPropertySyntax
+//@[4:9)      IdentifierSyntax
+//@[4:9)       Identifier |level|
+//@[9:10)      Colon |:|
+//@[11:25)      StringSyntax
+//@[11:25)       StringComplete |'CanNotDelete'|
+//@[25:26)     NewLine |\n|
+  }
+//@[2:3)     RightBrace |}|
+//@[3:4)   NewLine |\n|
+}
+//@[0:1)   RightBrace |}|
+//@[1:3) NewLine |\n\n|
+
+// single resource cascade extension
+//@[36:37) NewLine |\n|
+resource singleResourceCascadeExtension 'Microsoft.Authorization/locks@2016-09-01' = {
+//@[0:211) ResourceDeclarationSyntax
+//@[0:8)  Identifier |resource|
+//@[9:39)  IdentifierSyntax
+//@[9:39)   Identifier |singleResourceCascadeExtension|
+//@[40:82)  StringSyntax
+//@[40:82)   StringComplete |'Microsoft.Authorization/locks@2016-09-01'|
+//@[83:84)  Assignment |=|
+//@[85:211)  ObjectSyntax
+//@[85:86)   LeftBrace |{|
+//@[86:87)   NewLine |\n|
+  scope: singleResourceExtension
+//@[2:32)   ObjectPropertySyntax
+//@[2:7)    IdentifierSyntax
+//@[2:7)     Identifier |scope|
+//@[7:8)    Colon |:|
+//@[9:32)    VariableAccessSyntax
+//@[9:32)     IdentifierSyntax
+//@[9:32)      Identifier |singleResourceExtension|
+//@[32:33)   NewLine |\n|
+  name: 'single-resource-cascade-extension'
+//@[2:43)   ObjectPropertySyntax
+//@[2:6)    IdentifierSyntax
+//@[2:6)     Identifier |name|
+//@[6:7)    Colon |:|
+//@[8:43)    StringSyntax
+//@[8:43)     StringComplete |'single-resource-cascade-extension'|
+//@[43:44)   NewLine |\n|
+  properties: {
+//@[2:45)   ObjectPropertySyntax
+//@[2:12)    IdentifierSyntax
+//@[2:12)     Identifier |properties|
+//@[12:13)    Colon |:|
+//@[14:45)    ObjectSyntax
+//@[14:15)     LeftBrace |{|
+//@[15:16)     NewLine |\n|
+    level: 'CanNotDelete'
+//@[4:25)     ObjectPropertySyntax
+//@[4:9)      IdentifierSyntax
+//@[4:9)       Identifier |level|
+//@[9:10)      Colon |:|
+//@[11:25)      StringSyntax
+//@[11:25)       StringComplete |'CanNotDelete'|
+//@[25:26)     NewLine |\n|
+  }
+//@[2:3)     RightBrace |}|
+//@[3:4)   NewLine |\n|
+}
+//@[0:1)   RightBrace |}|
+//@[1:3) NewLine |\n\n|
+
 // resource collection
 //@[22:23) NewLine |\n|
 resource storageAccounts 'Microsoft.Storage/storageAccounts@2019-06-01' = [for account in accounts: {
@@ -195,6 +301,255 @@ resource storageAccounts 'Microsoft.Storage/storageAccounts@2019-06-01' = [for a
   ]
 //@[2:3)      RightSquare |]|
 //@[3:4)    NewLine |\n|
+}]
+//@[0:1)    RightBrace |}|
+//@[1:2)   RightSquare |]|
+//@[2:4) NewLine |\n\n|
+
+// extension of a single resource in a collection
+//@[49:50) NewLine |\n|
+resource extendSingleResourceInCollection 'Microsoft.Authorization/locks@2016-09-01' = {
+//@[0:212) ResourceDeclarationSyntax
+//@[0:8)  Identifier |resource|
+//@[9:41)  IdentifierSyntax
+//@[9:41)   Identifier |extendSingleResourceInCollection|
+//@[42:84)  StringSyntax
+//@[42:84)   StringComplete |'Microsoft.Authorization/locks@2016-09-01'|
+//@[85:86)  Assignment |=|
+//@[87:212)  ObjectSyntax
+//@[87:88)   LeftBrace |{|
+//@[88:89)   NewLine |\n|
+  name: 'one-resource-collection-item-lock'
+//@[2:43)   ObjectPropertySyntax
+//@[2:6)    IdentifierSyntax
+//@[2:6)     Identifier |name|
+//@[6:7)    Colon |:|
+//@[8:43)    StringSyntax
+//@[8:43)     StringComplete |'one-resource-collection-item-lock'|
+//@[43:44)   NewLine |\n|
+  properties: {
+//@[2:41)   ObjectPropertySyntax
+//@[2:12)    IdentifierSyntax
+//@[2:12)     Identifier |properties|
+//@[12:13)    Colon |:|
+//@[14:41)    ObjectSyntax
+//@[14:15)     LeftBrace |{|
+//@[15:16)     NewLine |\n|
+    level: 'ReadOnly'
+//@[4:21)     ObjectPropertySyntax
+//@[4:9)      IdentifierSyntax
+//@[4:9)       Identifier |level|
+//@[9:10)      Colon |:|
+//@[11:21)      StringSyntax
+//@[11:21)       StringComplete |'ReadOnly'|
+//@[21:22)     NewLine |\n|
+  }
+//@[2:3)     RightBrace |}|
+//@[3:4)   NewLine |\n|
+  scope: storageAccounts[index % 2]
+//@[2:35)   ObjectPropertySyntax
+//@[2:7)    IdentifierSyntax
+//@[2:7)     Identifier |scope|
+//@[7:8)    Colon |:|
+//@[9:35)    ArrayAccessSyntax
+//@[9:24)     VariableAccessSyntax
+//@[9:24)      IdentifierSyntax
+//@[9:24)       Identifier |storageAccounts|
+//@[24:25)     LeftSquare |[|
+//@[25:34)     BinaryOperationSyntax
+//@[25:30)      VariableAccessSyntax
+//@[25:30)       IdentifierSyntax
+//@[25:30)        Identifier |index|
+//@[31:32)      Modulo |%|
+//@[33:34)      IntegerLiteralSyntax
+//@[33:34)       Integer |2|
+//@[34:35)     RightSquare |]|
+//@[35:36)   NewLine |\n|
+}
+//@[0:1)   RightBrace |}|
+//@[1:3) NewLine |\n\n|
+
+// collection of extensions
+//@[27:28) NewLine |\n|
+resource extensionCollection 'Microsoft.Authorization/locks@2016-09-01' = [for i in range(0,1): {
+//@[0:212) ResourceDeclarationSyntax
+//@[0:8)  Identifier |resource|
+//@[9:28)  IdentifierSyntax
+//@[9:28)   Identifier |extensionCollection|
+//@[29:71)  StringSyntax
+//@[29:71)   StringComplete |'Microsoft.Authorization/locks@2016-09-01'|
+//@[72:73)  Assignment |=|
+//@[74:212)  ForSyntax
+//@[74:75)   LeftSquare |[|
+//@[75:78)   Identifier |for|
+//@[79:80)   LocalVariableSyntax
+//@[79:80)    IdentifierSyntax
+//@[79:80)     Identifier |i|
+//@[81:83)   Identifier |in|
+//@[84:94)   FunctionCallSyntax
+//@[84:89)    IdentifierSyntax
+//@[84:89)     Identifier |range|
+//@[89:90)    LeftParen |(|
+//@[90:92)    FunctionArgumentSyntax
+//@[90:91)     IntegerLiteralSyntax
+//@[90:91)      Integer |0|
+//@[91:92)     Comma |,|
+//@[92:93)    FunctionArgumentSyntax
+//@[92:93)     IntegerLiteralSyntax
+//@[92:93)      Integer |1|
+//@[93:94)    RightParen |)|
+//@[94:95)   Colon |:|
+//@[96:211)   ObjectSyntax
+//@[96:97)    LeftBrace |{|
+//@[97:98)    NewLine |\n|
+  name: 'lock-${i}'
+//@[2:19)    ObjectPropertySyntax
+//@[2:6)     IdentifierSyntax
+//@[2:6)      Identifier |name|
+//@[6:7)     Colon |:|
+//@[8:19)     StringSyntax
+//@[8:16)      StringLeftPiece |'lock-${|
+//@[16:17)      VariableAccessSyntax
+//@[16:17)       IdentifierSyntax
+//@[16:17)        Identifier |i|
+//@[17:19)      StringRightPiece |}'|
+//@[19:20)    NewLine |\n|
+  properties: {
+//@[2:67)    ObjectPropertySyntax
+//@[2:12)     IdentifierSyntax
+//@[2:12)      Identifier |properties|
+//@[12:13)     Colon |:|
+//@[14:67)     ObjectSyntax
+//@[14:15)      LeftBrace |{|
+//@[15:16)      NewLine |\n|
+    level: i == 0 ? 'CanNotDelete' : 'ReadOnly'
+//@[4:47)      ObjectPropertySyntax
+//@[4:9)       IdentifierSyntax
+//@[4:9)        Identifier |level|
+//@[9:10)       Colon |:|
+//@[11:47)       TernaryOperationSyntax
+//@[11:17)        BinaryOperationSyntax
+//@[11:12)         VariableAccessSyntax
+//@[11:12)          IdentifierSyntax
+//@[11:12)           Identifier |i|
+//@[13:15)         Equals |==|
+//@[16:17)         IntegerLiteralSyntax
+//@[16:17)          Integer |0|
+//@[18:19)        Question |?|
+//@[20:34)        StringSyntax
+//@[20:34)         StringComplete |'CanNotDelete'|
+//@[35:36)        Colon |:|
+//@[37:47)        StringSyntax
+//@[37:47)         StringComplete |'ReadOnly'|
+//@[47:48)      NewLine |\n|
+  }
+//@[2:3)      RightBrace |}|
+//@[3:4)    NewLine |\n|
+  scope: singleResource
+//@[2:23)    ObjectPropertySyntax
+//@[2:7)     IdentifierSyntax
+//@[2:7)      Identifier |scope|
+//@[7:8)     Colon |:|
+//@[9:23)     VariableAccessSyntax
+//@[9:23)      IdentifierSyntax
+//@[9:23)       Identifier |singleResource|
+//@[23:24)    NewLine |\n|
+}]
+//@[0:1)    RightBrace |}|
+//@[1:2)   RightSquare |]|
+//@[2:4) NewLine |\n\n|
+
+// cascade extend the extension
+//@[31:32) NewLine |\n|
+resource lockTheLocks 'Microsoft.Authorization/locks@2016-09-01' = [for i in range(0,1): {
+//@[0:222) ResourceDeclarationSyntax
+//@[0:8)  Identifier |resource|
+//@[9:21)  IdentifierSyntax
+//@[9:21)   Identifier |lockTheLocks|
+//@[22:64)  StringSyntax
+//@[22:64)   StringComplete |'Microsoft.Authorization/locks@2016-09-01'|
+//@[65:66)  Assignment |=|
+//@[67:222)  ForSyntax
+//@[67:68)   LeftSquare |[|
+//@[68:71)   Identifier |for|
+//@[72:73)   LocalVariableSyntax
+//@[72:73)    IdentifierSyntax
+//@[72:73)     Identifier |i|
+//@[74:76)   Identifier |in|
+//@[77:87)   FunctionCallSyntax
+//@[77:82)    IdentifierSyntax
+//@[77:82)     Identifier |range|
+//@[82:83)    LeftParen |(|
+//@[83:85)    FunctionArgumentSyntax
+//@[83:84)     IntegerLiteralSyntax
+//@[83:84)      Integer |0|
+//@[84:85)     Comma |,|
+//@[85:86)    FunctionArgumentSyntax
+//@[85:86)     IntegerLiteralSyntax
+//@[85:86)      Integer |1|
+//@[86:87)    RightParen |)|
+//@[87:88)   Colon |:|
+//@[89:221)   ObjectSyntax
+//@[89:90)    LeftBrace |{|
+//@[90:91)    NewLine |\n|
+  name: 'lock-the-lock-${i}'
+//@[2:28)    ObjectPropertySyntax
+//@[2:6)     IdentifierSyntax
+//@[2:6)      Identifier |name|
+//@[6:7)     Colon |:|
+//@[8:28)     StringSyntax
+//@[8:25)      StringLeftPiece |'lock-the-lock-${|
+//@[25:26)      VariableAccessSyntax
+//@[25:26)       IdentifierSyntax
+//@[25:26)        Identifier |i|
+//@[26:28)      StringRightPiece |}'|
+//@[28:29)    NewLine |\n|
+  properties: {
+//@[2:67)    ObjectPropertySyntax
+//@[2:12)     IdentifierSyntax
+//@[2:12)      Identifier |properties|
+//@[12:13)     Colon |:|
+//@[14:67)     ObjectSyntax
+//@[14:15)      LeftBrace |{|
+//@[15:16)      NewLine |\n|
+    level: i == 0 ? 'CanNotDelete' : 'ReadOnly'
+//@[4:47)      ObjectPropertySyntax
+//@[4:9)       IdentifierSyntax
+//@[4:9)        Identifier |level|
+//@[9:10)       Colon |:|
+//@[11:47)       TernaryOperationSyntax
+//@[11:17)        BinaryOperationSyntax
+//@[11:12)         VariableAccessSyntax
+//@[11:12)          IdentifierSyntax
+//@[11:12)           Identifier |i|
+//@[13:15)         Equals |==|
+//@[16:17)         IntegerLiteralSyntax
+//@[16:17)          Integer |0|
+//@[18:19)        Question |?|
+//@[20:34)        StringSyntax
+//@[20:34)         StringComplete |'CanNotDelete'|
+//@[35:36)        Colon |:|
+//@[37:47)        StringSyntax
+//@[37:47)         StringComplete |'ReadOnly'|
+//@[47:48)      NewLine |\n|
+  }
+//@[2:3)      RightBrace |}|
+//@[3:4)    NewLine |\n|
+  scope: extensionCollection[i]
+//@[2:31)    ObjectPropertySyntax
+//@[2:7)     IdentifierSyntax
+//@[2:7)      Identifier |scope|
+//@[7:8)     Colon |:|
+//@[9:31)     ArrayAccessSyntax
+//@[9:28)      VariableAccessSyntax
+//@[9:28)       IdentifierSyntax
+//@[9:28)        Identifier |extensionCollection|
+//@[28:29)      LeftSquare |[|
+//@[29:30)      VariableAccessSyntax
+//@[29:30)       IdentifierSyntax
+//@[29:30)        Identifier |i|
+//@[30:31)      RightSquare |]|
+//@[31:32)    NewLine |\n|
 }]
 //@[0:1)    RightBrace |}|
 //@[1:2)   RightSquare |]|

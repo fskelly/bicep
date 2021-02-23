@@ -172,9 +172,7 @@ namespace Bicep.Core.Emit
             // local function
             LanguageExpression? ConvertResourcePropertyAccess(ResourceSymbol resourceSymbol, SyntaxBase? indexExpression)
             {
-                var typeReference = resourceSymbol.IsCollection
-                    ? EmitHelpers.GetResourceCollectionTypeReference(resourceSymbol)
-                    : EmitHelpers.GetSingleResourceTypeReference(resourceSymbol);
+                var typeReference = EmitHelpers.SingleResourceTypeReference(resourceSymbol);
 
                 // special cases for certain resource property access. if we recurse normally, we'll end up
                 // generating statements like reference(resourceId(...)).id which are not accepted by ARM
@@ -299,9 +297,7 @@ namespace Bicep.Core.Emit
 
         public LanguageExpression GetUnqualifiedResourceId(ResourceSymbol resourceSymbol)
         {
-            var typeReference = resourceSymbol.IsCollection
-                ? EmitHelpers.GetResourceCollectionTypeReference(resourceSymbol)
-                : EmitHelpers.GetSingleResourceTypeReference(resourceSymbol);
+            var typeReference = EmitHelpers.SingleResourceTypeReference(resourceSymbol);
 
             return ScopeHelper.FormatUnqualifiedResourceId(
                 context,
@@ -313,9 +309,7 @@ namespace Bicep.Core.Emit
 
         public LanguageExpression GetFullyQualifiedResourceId(ResourceSymbol resourceSymbol, SyntaxBase newContext)
         {
-            var typeReference = resourceSymbol.IsCollection
-                ? EmitHelpers.GetResourceCollectionTypeReference(resourceSymbol)
-                : EmitHelpers.GetSingleResourceTypeReference(resourceSymbol);
+            var typeReference = EmitHelpers.SingleResourceTypeReference(resourceSymbol);
 
             return ScopeHelper.FormatFullyQualifiedResourceId(
                 context,
@@ -429,9 +423,7 @@ namespace Bicep.Core.Emit
                     return CreateFunction("variables", new JTokenExpression(name));
 
                 case ResourceSymbol resourceSymbol:
-                    var typeReference = resourceSymbol.IsCollection
-                        ? EmitHelpers.GetResourceCollectionTypeReference(resourceSymbol)
-                        : EmitHelpers.GetSingleResourceTypeReference(resourceSymbol);
+                    var typeReference = EmitHelpers.SingleResourceTypeReference(resourceSymbol);
                     return GetReferenceExpression(resourceSymbol, typeReference, true, variableAccessSyntax);
 
                 case ModuleSymbol moduleSymbol:
