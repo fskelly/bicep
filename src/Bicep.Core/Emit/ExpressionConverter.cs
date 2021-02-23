@@ -170,7 +170,7 @@ namespace Bicep.Core.Emit
         private LanguageExpression ConvertPropertyAccess(PropertyAccessSyntax propertyAccess)
         {
             // local function
-            LanguageExpression? ConvertResourcePropertyAccess(ResourceSymbol resourceSymbol, SyntaxBase? indexExpression, SyntaxBase newContext)
+            LanguageExpression? ConvertResourcePropertyAccess(ResourceSymbol resourceSymbol, SyntaxBase? indexExpression)
             {
                 var typeReference = resourceSymbol.IsCollection
                     ? EmitHelpers.GetResourceCollectionTypeReference(resourceSymbol)
@@ -208,7 +208,7 @@ namespace Bicep.Core.Emit
 
             if (propertyAccess.BaseExpression is VariableAccessSyntax propVariableAccess &&
                 context.SemanticModel.GetSymbolInfo(propVariableAccess) is ResourceSymbol resourceSymbol &&
-                ConvertResourcePropertyAccess(resourceSymbol, null, propertyAccess) is { } convertedSingle)
+                ConvertResourcePropertyAccess(resourceSymbol, null) is { } convertedSingle)
             {
                 // we are doing property access on a single resource
                 // and we are dealing with special case properties
@@ -218,7 +218,7 @@ namespace Bicep.Core.Emit
             if(propertyAccess.BaseExpression is ArrayAccessSyntax propArrayAccess &&
                 propArrayAccess.BaseExpression is VariableAccessSyntax arrayVariableAccess &&
                 context.SemanticModel.GetSymbolInfo(arrayVariableAccess) is ResourceSymbol resourceCollectionSymbol && 
-                ConvertResourcePropertyAccess(resourceCollectionSymbol, propArrayAccess.IndexExpression, propertyAccess) is { } convertedCollection)
+                ConvertResourcePropertyAccess(resourceCollectionSymbol, propArrayAccess.IndexExpression) is { } convertedCollection)
             {
 
                 // we are doing property access on an array access of a resource collection

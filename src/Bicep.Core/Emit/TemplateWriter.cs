@@ -335,7 +335,7 @@ namespace Bicep.Core.Emit
             emitter.EmitProperty("apiVersion", typeReference.ApiVersion);
             if (context.SemanticModel.EmitLimitationInfo.ResourceScopeData.TryGetValue(resourceSymbol, out var scopeData) && scopeData.ResourceScopeSymbol is { } scopeResource)
             {
-                emitter.EmitProperty("scope", () => emitter.EmitUnqualifiedResourceId(scopeResource, body));
+                emitter.EmitProperty("scope", () => emitter.EmitUnqualifiedResourceId(scopeResource));
             }
             emitter.EmitObjectProperties((ObjectSyntax)body, ResourcePropertiesToOmit);
 

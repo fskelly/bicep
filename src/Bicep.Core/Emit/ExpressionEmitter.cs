@@ -89,7 +89,7 @@ namespace Bicep.Core.Emit
             }
         }
 
-        public void EmitUnqualifiedResourceId(ResourceSymbol resourceSymbol, SyntaxBase newContext)
+        public void EmitUnqualifiedResourceId(ResourceSymbol resourceSymbol)
         {
             var unqualifiedResourceId = converter.GetUnqualifiedResourceId(resourceSymbol);
             var serialized = ExpressionSerializer.SerializeExpression(unqualifiedResourceId);

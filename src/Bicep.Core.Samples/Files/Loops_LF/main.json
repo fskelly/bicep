@@ -42,6 +42,18 @@
       }
     },
     {
+      "type": "Microsoft.Authorization/locks",
+      "apiVersion": "2016-09-01",
+      "scope": "[format('Microsoft.Storage/storageAccounts/{0}', format('{0}single-resource-name', parameters('name')))]",
+      "name": "single-resource-lock",
+      "properties": {
+        "level": "CanNotDelete"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', format('{0}single-resource-name', parameters('name')))]"
+      ]
+    },
+    {
       "copy": {
         "name": "storageAccounts",
         "count": "[length(parameters('accounts'))]"
@@ -56,6 +68,17 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', format('{0}single-resource-name', parameters('name')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Authorization/locks",
+      "apiVersion": "2016-09-01",
+      "name": "one-resource-collection-item-lock",
+      "properties": {
+        "level": "ReadOnly"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', format('{0}-collection-{1}', parameters('name'), parameters('accounts')[mod(parameters('index'), 2)].name))]"
       ]
     },
     {
@@ -408,8 +431,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "dev",
-      "templateHash": "4084920582704766012"
+      "version": "0.2.454.63276",
+      "templateHash": "1814591637808920447"
     }
   }
 }

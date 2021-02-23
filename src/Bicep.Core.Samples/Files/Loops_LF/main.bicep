@@ -12,6 +12,15 @@ resource singleResource 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   }
 }
 
+// extension of single resource
+resource singleResourceExtension 'Microsoft.Authorization/locks@2016-09-01' = {
+  scope: singleResource
+  name: 'single-resource-lock'
+  properties: {
+    level: 'CanNotDelete'
+  }
+}
+
 // resource collection
 resource storageAccounts 'Microsoft.Storage/storageAccounts@2019-06-01' = [for account in accounts: {
   name: '${name}-collection-${account.name}'
@@ -24,6 +33,15 @@ resource storageAccounts 'Microsoft.Storage/storageAccounts@2019-06-01' = [for a
     singleResource
   ]
 }]
+
+// extension of a single resource in a collection
+resource extendSingleResourceInCollection 'Microsoft.Authorization/locks@2016-09-01' = {
+  name: 'one-resource-collection-item-lock'
+  properties: {
+    level: 'ReadOnly'
+  }
+  scope: storageAccounts[index % 2]
+}
 
 // special case property access
 output indexedCollectionBlobEndpoint string = storageAccounts[index].properties.primaryEndpoints.blob
