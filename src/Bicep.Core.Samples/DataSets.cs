@@ -32,6 +32,8 @@ namespace Bicep.Core.Samples
 
         public static DataSet InvalidVariables_LF => CreateDataSet();
 
+        public static DataSet Loops_LF => CreateDataSet();
+
         public static DataSet Outputs_CRLF => CreateDataSet();
 
         public static DataSet Parameters_CRLF => CreateDataSet();

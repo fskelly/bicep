@@ -129,7 +129,7 @@ namespace Bicep.Core.Emit
             return null;
         }
 
-        public static LanguageExpression FormatFullyQualifiedResourceId(EmitterContext context, ExpressionConverter converter, ScopeData scopeData, string fullyQualifiedType, IEnumerable<LanguageExpression> nameSegments)
+        public static LanguageExpression FormatFullyQualifiedResourceId(EmitterContext context, ExpressionConverter converter, ScopeData scopeData, string fullyQualifiedType, IEnumerable<LanguageExpression> nameSegments, SyntaxBase newContext)
         {
             switch (scopeData.RequestedScope)
             {
@@ -193,13 +193,14 @@ namespace Bicep.Core.Emit
                         throw new InvalidOperationException($"Cannot format resourceId with non-null resource scope symbol");
                     }
 
-                    var parentTypeReference = EmitHelpers.GetTypeReference(scopeData.ResourceScopeSymbol);
+                    var parentTypeReference = EmitHelpers.GetSingleResourceTypeReference(scopeData.ResourceScopeSymbol);
                     var parentResourceId = FormatFullyQualifiedResourceId(
                         context,
                         converter,
                         context.ResourceScopeData[scopeData.ResourceScopeSymbol],
                         parentTypeReference.FullyQualifiedType,
-                        converter.GetResourceNameSegments(scopeData.ResourceScopeSymbol, parentTypeReference));
+                        converter.GetResourceNameSegments(scopeData.ResourceScopeSymbol, parentTypeReference),
+                        newContext);
 
                     return ExpressionConverter.GenerateExtensionResourceId(
                         parentResourceId,
@@ -225,7 +226,7 @@ namespace Bicep.Core.Emit
                         throw new InvalidOperationException($"Cannot format resourceId with non-null resource scope symbol");
                     }
 
-                    var parentTypeReference = EmitHelpers.GetTypeReference(scopeData.ResourceScopeSymbol);
+                    var parentTypeReference = EmitHelpers.GetSingleResourceTypeReference(scopeData.ResourceScopeSymbol);
                     var parentResourceId = FormatUnqualifiedResourceId(
                         context,
                         converter,
@@ -336,11 +337,20 @@ namespace Bicep.Core.Emit
             void logInvalidScopeDiagnostic(IPositionable positionable, ResourceScope suppliedScope, ResourceScope supportedScopes)
                 => diagnosticWriter.Write(positionable, x => x.UnsupportedResourceScope(suppliedScope, supportedScopes));
 
+            // local function
+            ResourceType? GetResourceType(ResourceSymbol resourceSymbol) => resourceSymbol.Type switch
+            {
+                ResourceType resourceType => resourceType,
+                ArrayType { Item: ResourceType resourceType } => resourceType,
+                _ => null
+            };
+
             var scopeInfo = new Dictionary<ResourceSymbol, ScopeData>();
 
             foreach (var resourceSymbol in semanticModel.Root.ResourceDeclarations)
             {
-                if (resourceSymbol.Type is not ResourceType resourceType)
+                var resourceType = GetResourceType(resourceSymbol);
+                if (resourceType is null)
                 {
                     // missing type should be caught during type validation
                     continue;
@@ -422,21 +432,30 @@ namespace Bicep.Core.Emit
 
         public static ImmutableDictionary<ModuleSymbol, ScopeData> GetModuleScopeInfo(SemanticModel semanticModel, IDiagnosticWriter diagnosticWriter)
         {
-            void logInvalidScopeDiagnostic(IPositionable positionable, ResourceScope suppliedScope, ResourceScope supportedScopes)
+            void LogInvalidScopeDiagnostic(IPositionable positionable, ResourceScope suppliedScope, ResourceScope supportedScopes)
                 => diagnosticWriter.Write(positionable, x => x.UnsupportedModuleScope(suppliedScope, supportedScopes));
+
+            // local function
+            ModuleType? GetModuleType(ModuleSymbol symbol) => symbol.Type switch
+            {
+                ModuleType moduleType => moduleType,
+                ArrayType {Item: ModuleType moduleType} => moduleType,
+                _ => null
+            };
 
             var scopeInfo = new Dictionary<ModuleSymbol, ScopeData>();
 
             foreach (var moduleSymbol in semanticModel.Root.ModuleDeclarations)
             {
-                if (moduleSymbol.Type is not ModuleType moduleType)
+                var moduleType = GetModuleType(moduleSymbol);
+                if (moduleType is null)
                 {
                     // missing type should be caught during type validation
                     continue;
                 }
 
                 var scopeProperty = moduleSymbol.SafeGetBodyProperty(LanguageConstants.ResourceScopePropertyName);
-                var scopeData = ScopeHelper.ValidateScope(semanticModel, logInvalidScopeDiagnostic, moduleType.ValidParentScopes, moduleSymbol.DeclaringModule.Value, scopeProperty);
+                var scopeData = ScopeHelper.ValidateScope(semanticModel, LogInvalidScopeDiagnostic, moduleType.ValidParentScopes, moduleSymbol.DeclaringModule.Value, scopeProperty);
 
                 if (scopeData is null)
                 {
