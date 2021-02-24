@@ -291,3 +291,23 @@ output indexedModulesName string = moduleCollectionWithSingleDependency[index].n
 //@[7:25) Output indexedModulesName. Type: string. Declaration start char: 0, length: 83
 output indexedModuleOutput string = moduleCollectionWithSingleDependency[index * 1].outputs.myOutput
 //@[7:26) Output indexedModuleOutput. Type: string. Declaration start char: 0, length: 100
+
+// resource collection
+resource existingStorageAccounts 'Microsoft.Storage/storageAccounts@2019-06-01' existing = [for account in accounts: {
+//@[96:103) Local account. Type: any. Declaration start char: 96, length: 7
+//@[9:32) Resource existingStorageAccounts. Type: Microsoft.Storage/storageAccounts@2019-06-01[]. Declaration start char: 0, length: 164
+  name: '${name}-existing-${account.name}'
+}]
+
+output existingIndexedResourceName string = existingStorageAccounts[index * 0].name
+//@[7:34) Output existingIndexedResourceName. Type: string. Declaration start char: 0, length: 83
+output existingIndexedResourceId string = existingStorageAccounts[index * 1].id
+//@[7:32) Output existingIndexedResourceId. Type: string. Declaration start char: 0, length: 79
+output existingIndexedResourceType string = existingStorageAccounts[index+2].type
+//@[7:34) Output existingIndexedResourceType. Type: string. Declaration start char: 0, length: 81
+output existingIndexedResourceApiVersion string = existingStorageAccounts[index-7].apiVersion
+//@[7:40) Output existingIndexedResourceApiVersion. Type: string. Declaration start char: 0, length: 93
+output existingIndexedResourceLocation string = existingStorageAccounts[index/2].location
+//@[7:38) Output existingIndexedResourceLocation. Type: string. Declaration start char: 0, length: 89
+output existingIndexedResourceAccessTier string = existingStorageAccounts[index%3].properties.accessTier
+//@[7:40) Output existingIndexedResourceAccessTier. Type: string. Declaration start char: 0, length: 104

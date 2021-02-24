@@ -343,3 +343,32 @@ module nonexistentArrays 'modulea.bicep' = [for evenMoreDuplicates in alsoDoesNo
     arrayParam: [for evenMoreDuplicates in totallyFake: doesNotExist]
   }
 }]
+
+output directRefToCollectionViaOutput array = nonexistentArrays
+
+module directRefToCollectionViaSingleBody 'modulea.bicep' = {
+  name: 'hello'
+  params: {
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+    objParam: {}
+    stringParamB: ''
+  }
+}
+
+module directRefToCollectionViaSingleConditionalBody 'modulea.bicep' = if(true) {
+  name: 'hello2'
+  params: {
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+    objParam: {}
+    stringParamB: ''
+  }
+}
+
+module directRefToCollectionViaLoopBody 'modulea.bicep' = [for test in []: {
+  name: 'hello3'
+  params: {
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+    objParam: {}
+    stringParamB: ''
+  }
+}]

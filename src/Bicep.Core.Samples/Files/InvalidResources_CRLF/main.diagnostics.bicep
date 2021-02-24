@@ -607,6 +607,7 @@ resource discriminatorKeyValueMissing_for 'Microsoft.Resources/deploymentScripts
 
 // cannot . access properties of a resource loop
 var resourceListIsNotSingleResource = discriminatorKeyValueMissing_for.kind
+//@[38:70) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |discriminatorKeyValueMissing_for|
 //@[71:75) [BCP055 (Error)] Cannot access properties of type "Microsoft.Resources/deploymentScripts@2020-10-01[]". An "object" type is required. |kind|
 
 // #completionTest(87) -> missingDiscriminatorPropertyAccess
@@ -1279,3 +1280,35 @@ resource premiumStorages 'Microsoft.Storage/storageAccounts@2019-06-01' = [for a
   kind: 'StorageV2'
 }]
 
+var directRefViaVar = premiumStorages
+//@[22:37) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |premiumStorages|
+output directRefViaOutput array = union(premiumStorages, stuffs)
+//@[40:55) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |premiumStorages|
+//@[57:63) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |stuffs|
+
+resource directRefViaSingleResourceBody 'Microsoft.Network/dnszones@2018-05-01' = {
+  name: 'myZone2'
+  location: 'global'
+  properties: {
+    registrationVirtualNetworks: premiumStorages
+//@[33:48) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |premiumStorages|
+  }
+}
+
+resource directRefViaSingleConditionalResourceBody 'Microsoft.Network/dnszones@2018-05-01' = if(true) {
+  name: 'myZone3'
+  location: 'global'
+  properties: {
+    registrationVirtualNetworks: concat(premiumStorages, stuffs)
+//@[40:55) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |premiumStorages|
+//@[57:63) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |stuffs|
+  }
+}
+
+resource directRefViaSingleLoopResourceBody 'Microsoft.Network/virtualNetworks@2020-06-01' = [for i in range(0, 3): {
+  name: 'vnet-${i}'
+  properties: {
+    subnets: premiumStorages
+//@[13:28) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |premiumStorages|
+  }
+}]

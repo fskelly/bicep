@@ -1643,6 +1643,4 @@ resource duplicateInGlobalAndTwoLoops 'Microsoft.Network/virtualNetworks@2020-06
 }]
 //@[0:1) RightBrace |}|
 //@[1:2) RightSquare |]|
-//@[2:4) NewLine |\r\n|
-
-//@[0:0) EndOfFile ||
+//@[2:2) EndOfFile ||

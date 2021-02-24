@@ -4392,6 +4392,143 @@ resource premiumStorages 'Microsoft.Storage/storageAccounts@2019-06-01' = [for a
 }]
 //@[0:1) RightBrace |}|
 //@[1:2) RightSquare |]|
-//@[2:4) NewLine |\r\n|
+//@[2:6) NewLine |\r\n\r\n|
 
-//@[0:0) EndOfFile ||
+var directRefViaVar = premiumStorages
+//@[0:3) Identifier |var|
+//@[4:19) Identifier |directRefViaVar|
+//@[20:21) Assignment |=|
+//@[22:37) Identifier |premiumStorages|
+//@[37:39) NewLine |\r\n|
+output directRefViaOutput array = union(premiumStorages, stuffs)
+//@[0:6) Identifier |output|
+//@[7:25) Identifier |directRefViaOutput|
+//@[26:31) Identifier |array|
+//@[32:33) Assignment |=|
+//@[34:39) Identifier |union|
+//@[39:40) LeftParen |(|
+//@[40:55) Identifier |premiumStorages|
+//@[55:56) Comma |,|
+//@[57:63) Identifier |stuffs|
+//@[63:64) RightParen |)|
+//@[64:68) NewLine |\r\n\r\n|
+
+resource directRefViaSingleResourceBody 'Microsoft.Network/dnszones@2018-05-01' = {
+//@[0:8) Identifier |resource|
+//@[9:39) Identifier |directRefViaSingleResourceBody|
+//@[40:79) StringComplete |'Microsoft.Network/dnszones@2018-05-01'|
+//@[80:81) Assignment |=|
+//@[82:83) LeftBrace |{|
+//@[83:85) NewLine |\r\n|
+  name: 'myZone2'
+//@[2:6) Identifier |name|
+//@[6:7) Colon |:|
+//@[8:17) StringComplete |'myZone2'|
+//@[17:19) NewLine |\r\n|
+  location: 'global'
+//@[2:10) Identifier |location|
+//@[10:11) Colon |:|
+//@[12:20) StringComplete |'global'|
+//@[20:22) NewLine |\r\n|
+  properties: {
+//@[2:12) Identifier |properties|
+//@[12:13) Colon |:|
+//@[14:15) LeftBrace |{|
+//@[15:17) NewLine |\r\n|
+    registrationVirtualNetworks: premiumStorages
+//@[4:31) Identifier |registrationVirtualNetworks|
+//@[31:32) Colon |:|
+//@[33:48) Identifier |premiumStorages|
+//@[48:50) NewLine |\r\n|
+  }
+//@[2:3) RightBrace |}|
+//@[3:5) NewLine |\r\n|
+}
+//@[0:1) RightBrace |}|
+//@[1:5) NewLine |\r\n\r\n|
+
+resource directRefViaSingleConditionalResourceBody 'Microsoft.Network/dnszones@2018-05-01' = if(true) {
+//@[0:8) Identifier |resource|
+//@[9:50) Identifier |directRefViaSingleConditionalResourceBody|
+//@[51:90) StringComplete |'Microsoft.Network/dnszones@2018-05-01'|
+//@[91:92) Assignment |=|
+//@[93:95) Identifier |if|
+//@[95:96) LeftParen |(|
+//@[96:100) TrueKeyword |true|
+//@[100:101) RightParen |)|
+//@[102:103) LeftBrace |{|
+//@[103:105) NewLine |\r\n|
+  name: 'myZone3'
+//@[2:6) Identifier |name|
+//@[6:7) Colon |:|
+//@[8:17) StringComplete |'myZone3'|
+//@[17:19) NewLine |\r\n|
+  location: 'global'
+//@[2:10) Identifier |location|
+//@[10:11) Colon |:|
+//@[12:20) StringComplete |'global'|
+//@[20:22) NewLine |\r\n|
+  properties: {
+//@[2:12) Identifier |properties|
+//@[12:13) Colon |:|
+//@[14:15) LeftBrace |{|
+//@[15:17) NewLine |\r\n|
+    registrationVirtualNetworks: concat(premiumStorages, stuffs)
+//@[4:31) Identifier |registrationVirtualNetworks|
+//@[31:32) Colon |:|
+//@[33:39) Identifier |concat|
+//@[39:40) LeftParen |(|
+//@[40:55) Identifier |premiumStorages|
+//@[55:56) Comma |,|
+//@[57:63) Identifier |stuffs|
+//@[63:64) RightParen |)|
+//@[64:66) NewLine |\r\n|
+  }
+//@[2:3) RightBrace |}|
+//@[3:5) NewLine |\r\n|
+}
+//@[0:1) RightBrace |}|
+//@[1:5) NewLine |\r\n\r\n|
+
+resource directRefViaSingleLoopResourceBody 'Microsoft.Network/virtualNetworks@2020-06-01' = [for i in range(0, 3): {
+//@[0:8) Identifier |resource|
+//@[9:43) Identifier |directRefViaSingleLoopResourceBody|
+//@[44:90) StringComplete |'Microsoft.Network/virtualNetworks@2020-06-01'|
+//@[91:92) Assignment |=|
+//@[93:94) LeftSquare |[|
+//@[94:97) Identifier |for|
+//@[98:99) Identifier |i|
+//@[100:102) Identifier |in|
+//@[103:108) Identifier |range|
+//@[108:109) LeftParen |(|
+//@[109:110) Integer |0|
+//@[110:111) Comma |,|
+//@[112:113) Integer |3|
+//@[113:114) RightParen |)|
+//@[114:115) Colon |:|
+//@[116:117) LeftBrace |{|
+//@[117:119) NewLine |\r\n|
+  name: 'vnet-${i}'
+//@[2:6) Identifier |name|
+//@[6:7) Colon |:|
+//@[8:16) StringLeftPiece |'vnet-${|
+//@[16:17) Identifier |i|
+//@[17:19) StringRightPiece |}'|
+//@[19:21) NewLine |\r\n|
+  properties: {
+//@[2:12) Identifier |properties|
+//@[12:13) Colon |:|
+//@[14:15) LeftBrace |{|
+//@[15:17) NewLine |\r\n|
+    subnets: premiumStorages
+//@[4:11) Identifier |subnets|
+//@[11:12) Colon |:|
+//@[13:28) Identifier |premiumStorages|
+//@[28:30) NewLine |\r\n|
+  }
+//@[2:3) RightBrace |}|
+//@[3:5) NewLine |\r\n|
+}]
+//@[0:1) RightBrace |}|
+//@[1:2) RightSquare |]|
+//@[2:2) EndOfFile ||

@@ -815,10 +815,15 @@ namespace Bicep.Core.Diagnostics
                 "BCP142",
                 "Property value for-expressions cannot be nested.");
 
-            public ErrorDiagnostic ExpressionedPropertiesNotAllowedWithLoops => new(
+            public ErrorDiagnostic ExpressionedPropertiesNotAllowedWithLoops() => new(
                 TextSpan,
                 "BCP143",
                 "For-expressions cannot be used with properties whose names are also expressions.");
+
+            public ErrorDiagnostic DirectAccessToCollectionNotSupported() => new(
+                TextSpan,
+                "BCP144",
+                "Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression.");
         }
 
         public static DiagnosticBuilderInternal ForPosition(TextSpan span)

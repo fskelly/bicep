@@ -1200,3 +1200,34 @@ resource premiumStorages 'Microsoft.Storage/storageAccounts@2019-06-01' = [for a
   kind: 'StorageV2'
 }]
 
+var directRefViaVar = premiumStorages
+//@[4:19) Variable directRefViaVar. Type: Microsoft.Storage/storageAccounts@2019-06-01[]. Declaration start char: 0, length: 37
+output directRefViaOutput array = union(premiumStorages, stuffs)
+//@[7:25) Output directRefViaOutput. Type: array. Declaration start char: 0, length: 64
+
+resource directRefViaSingleResourceBody 'Microsoft.Network/dnszones@2018-05-01' = {
+//@[9:39) Resource directRefViaSingleResourceBody. Type: Microsoft.Network/dnsZones@2018-05-01. Declaration start char: 0, length: 199
+  name: 'myZone2'
+  location: 'global'
+  properties: {
+    registrationVirtualNetworks: premiumStorages
+  }
+}
+
+resource directRefViaSingleConditionalResourceBody 'Microsoft.Network/dnszones@2018-05-01' = if(true) {
+//@[9:50) Resource directRefViaSingleConditionalResourceBody. Type: Microsoft.Network/dnsZones@2018-05-01. Declaration start char: 0, length: 235
+  name: 'myZone3'
+  location: 'global'
+  properties: {
+    registrationVirtualNetworks: concat(premiumStorages, stuffs)
+  }
+}
+
+resource directRefViaSingleLoopResourceBody 'Microsoft.Network/virtualNetworks@2020-06-01' = [for i in range(0, 3): {
+//@[98:99) Local i. Type: int. Declaration start char: 98, length: 1
+//@[9:43) Resource directRefViaSingleLoopResourceBody. Type: Microsoft.Network/virtualNetworks@2020-06-01[]. Declaration start char: 0, length: 194
+  name: 'vnet-${i}'
+  properties: {
+    subnets: premiumStorages
+  }
+}]

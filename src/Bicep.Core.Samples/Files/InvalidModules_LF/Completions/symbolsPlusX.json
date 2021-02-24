@@ -386,6 +386,48 @@
     }
   },
   {
+    "label": "directRefToCollectionViaLoopBody",
+    "kind": "module",
+    "detail": "directRefToCollectionViaLoopBody",
+    "deprecated": false,
+    "preselect": false,
+    "sortText": "2_directRefToCollectionViaLoopBody",
+    "insertTextFormat": "plainText",
+    "insertTextMode": "asIs",
+    "textEdit": {
+      "range": {},
+      "newText": "directRefToCollectionViaLoopBody"
+    }
+  },
+  {
+    "label": "directRefToCollectionViaSingleBody",
+    "kind": "module",
+    "detail": "directRefToCollectionViaSingleBody",
+    "deprecated": false,
+    "preselect": false,
+    "sortText": "2_directRefToCollectionViaSingleBody",
+    "insertTextFormat": "plainText",
+    "insertTextMode": "asIs",
+    "textEdit": {
+      "range": {},
+      "newText": "directRefToCollectionViaSingleBody"
+    }
+  },
+  {
+    "label": "directRefToCollectionViaSingleConditionalBody",
+    "kind": "module",
+    "detail": "directRefToCollectionViaSingleConditionalBody",
+    "deprecated": false,
+    "preselect": false,
+    "sortText": "2_directRefToCollectionViaSingleConditionalBody",
+    "insertTextFormat": "plainText",
+    "insertTextMode": "asIs",
+    "textEdit": {
+      "range": {},
+      "newText": "directRefToCollectionViaSingleConditionalBody"
+    }
+  },
+  {
     "label": "empty",
     "kind": "function",
     "detail": "empty()",

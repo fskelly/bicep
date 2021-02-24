@@ -2130,4 +2130,215 @@ output indexedModuleOutput string = moduleCollectionWithSingleDependency[index *
 //@[91:92)   Dot |.|
 //@[92:100)   IdentifierSyntax
 //@[92:100)    Identifier |myOutput|
-//@[100:100) EndOfFile ||
+//@[100:102) NewLine |\n\n|
+
+// resource collection
+//@[22:23) NewLine |\n|
+resource existingStorageAccounts 'Microsoft.Storage/storageAccounts@2019-06-01' existing = [for account in accounts: {
+//@[0:164) ResourceDeclarationSyntax
+//@[0:8)  Identifier |resource|
+//@[9:32)  IdentifierSyntax
+//@[9:32)   Identifier |existingStorageAccounts|
+//@[33:79)  StringSyntax
+//@[33:79)   StringComplete |'Microsoft.Storage/storageAccounts@2019-06-01'|
+//@[80:88)  Identifier |existing|
+//@[89:90)  Assignment |=|
+//@[91:164)  ForSyntax
+//@[91:92)   LeftSquare |[|
+//@[92:95)   Identifier |for|
+//@[96:103)   LocalVariableSyntax
+//@[96:103)    IdentifierSyntax
+//@[96:103)     Identifier |account|
+//@[104:106)   Identifier |in|
+//@[107:115)   VariableAccessSyntax
+//@[107:115)    IdentifierSyntax
+//@[107:115)     Identifier |accounts|
+//@[115:116)   Colon |:|
+//@[117:163)   ObjectSyntax
+//@[117:118)    LeftBrace |{|
+//@[118:119)    NewLine |\n|
+  name: '${name}-existing-${account.name}'
+//@[2:42)    ObjectPropertySyntax
+//@[2:6)     IdentifierSyntax
+//@[2:6)      Identifier |name|
+//@[6:7)     Colon |:|
+//@[8:42)     StringSyntax
+//@[8:11)      StringLeftPiece |'${|
+//@[11:15)      VariableAccessSyntax
+//@[11:15)       IdentifierSyntax
+//@[11:15)        Identifier |name|
+//@[15:28)      StringMiddlePiece |}-existing-${|
+//@[28:40)      PropertyAccessSyntax
+//@[28:35)       VariableAccessSyntax
+//@[28:35)        IdentifierSyntax
+//@[28:35)         Identifier |account|
+//@[35:36)       Dot |.|
+//@[36:40)       IdentifierSyntax
+//@[36:40)        Identifier |name|
+//@[40:42)      StringRightPiece |}'|
+//@[42:43)    NewLine |\n|
+}]
+//@[0:1)    RightBrace |}|
+//@[1:2)   RightSquare |]|
+//@[2:4) NewLine |\n\n|
+
+output existingIndexedResourceName string = existingStorageAccounts[index * 0].name
+//@[0:83) OutputDeclarationSyntax
+//@[0:6)  Identifier |output|
+//@[7:34)  IdentifierSyntax
+//@[7:34)   Identifier |existingIndexedResourceName|
+//@[35:41)  TypeSyntax
+//@[35:41)   Identifier |string|
+//@[42:43)  Assignment |=|
+//@[44:83)  PropertyAccessSyntax
+//@[44:78)   ArrayAccessSyntax
+//@[44:67)    VariableAccessSyntax
+//@[44:67)     IdentifierSyntax
+//@[44:67)      Identifier |existingStorageAccounts|
+//@[67:68)    LeftSquare |[|
+//@[68:77)    BinaryOperationSyntax
+//@[68:73)     VariableAccessSyntax
+//@[68:73)      IdentifierSyntax
+//@[68:73)       Identifier |index|
+//@[74:75)     Asterisk |*|
+//@[76:77)     IntegerLiteralSyntax
+//@[76:77)      Integer |0|
+//@[77:78)    RightSquare |]|
+//@[78:79)   Dot |.|
+//@[79:83)   IdentifierSyntax
+//@[79:83)    Identifier |name|
+//@[83:84) NewLine |\n|
+output existingIndexedResourceId string = existingStorageAccounts[index * 1].id
+//@[0:79) OutputDeclarationSyntax
+//@[0:6)  Identifier |output|
+//@[7:32)  IdentifierSyntax
+//@[7:32)   Identifier |existingIndexedResourceId|
+//@[33:39)  TypeSyntax
+//@[33:39)   Identifier |string|
+//@[40:41)  Assignment |=|
+//@[42:79)  PropertyAccessSyntax
+//@[42:76)   ArrayAccessSyntax
+//@[42:65)    VariableAccessSyntax
+//@[42:65)     IdentifierSyntax
+//@[42:65)      Identifier |existingStorageAccounts|
+//@[65:66)    LeftSquare |[|
+//@[66:75)    BinaryOperationSyntax
+//@[66:71)     VariableAccessSyntax
+//@[66:71)      IdentifierSyntax
+//@[66:71)       Identifier |index|
+//@[72:73)     Asterisk |*|
+//@[74:75)     IntegerLiteralSyntax
+//@[74:75)      Integer |1|
+//@[75:76)    RightSquare |]|
+//@[76:77)   Dot |.|
+//@[77:79)   IdentifierSyntax
+//@[77:79)    Identifier |id|
+//@[79:80) NewLine |\n|
+output existingIndexedResourceType string = existingStorageAccounts[index+2].type
+//@[0:81) OutputDeclarationSyntax
+//@[0:6)  Identifier |output|
+//@[7:34)  IdentifierSyntax
+//@[7:34)   Identifier |existingIndexedResourceType|
+//@[35:41)  TypeSyntax
+//@[35:41)   Identifier |string|
+//@[42:43)  Assignment |=|
+//@[44:81)  PropertyAccessSyntax
+//@[44:76)   ArrayAccessSyntax
+//@[44:67)    VariableAccessSyntax
+//@[44:67)     IdentifierSyntax
+//@[44:67)      Identifier |existingStorageAccounts|
+//@[67:68)    LeftSquare |[|
+//@[68:75)    BinaryOperationSyntax
+//@[68:73)     VariableAccessSyntax
+//@[68:73)      IdentifierSyntax
+//@[68:73)       Identifier |index|
+//@[73:74)     Plus |+|
+//@[74:75)     IntegerLiteralSyntax
+//@[74:75)      Integer |2|
+//@[75:76)    RightSquare |]|
+//@[76:77)   Dot |.|
+//@[77:81)   IdentifierSyntax
+//@[77:81)    Identifier |type|
+//@[81:82) NewLine |\n|
+output existingIndexedResourceApiVersion string = existingStorageAccounts[index-7].apiVersion
+//@[0:93) OutputDeclarationSyntax
+//@[0:6)  Identifier |output|
+//@[7:40)  IdentifierSyntax
+//@[7:40)   Identifier |existingIndexedResourceApiVersion|
+//@[41:47)  TypeSyntax
+//@[41:47)   Identifier |string|
+//@[48:49)  Assignment |=|
+//@[50:93)  PropertyAccessSyntax
+//@[50:82)   ArrayAccessSyntax
+//@[50:73)    VariableAccessSyntax
+//@[50:73)     IdentifierSyntax
+//@[50:73)      Identifier |existingStorageAccounts|
+//@[73:74)    LeftSquare |[|
+//@[74:81)    BinaryOperationSyntax
+//@[74:79)     VariableAccessSyntax
+//@[74:79)      IdentifierSyntax
+//@[74:79)       Identifier |index|
+//@[79:80)     Minus |-|
+//@[80:81)     IntegerLiteralSyntax
+//@[80:81)      Integer |7|
+//@[81:82)    RightSquare |]|
+//@[82:83)   Dot |.|
+//@[83:93)   IdentifierSyntax
+//@[83:93)    Identifier |apiVersion|
+//@[93:94) NewLine |\n|
+output existingIndexedResourceLocation string = existingStorageAccounts[index/2].location
+//@[0:89) OutputDeclarationSyntax
+//@[0:6)  Identifier |output|
+//@[7:38)  IdentifierSyntax
+//@[7:38)   Identifier |existingIndexedResourceLocation|
+//@[39:45)  TypeSyntax
+//@[39:45)   Identifier |string|
+//@[46:47)  Assignment |=|
+//@[48:89)  PropertyAccessSyntax
+//@[48:80)   ArrayAccessSyntax
+//@[48:71)    VariableAccessSyntax
+//@[48:71)     IdentifierSyntax
+//@[48:71)      Identifier |existingStorageAccounts|
+//@[71:72)    LeftSquare |[|
+//@[72:79)    BinaryOperationSyntax
+//@[72:77)     VariableAccessSyntax
+//@[72:77)      IdentifierSyntax
+//@[72:77)       Identifier |index|
+//@[77:78)     Slash |/|
+//@[78:79)     IntegerLiteralSyntax
+//@[78:79)      Integer |2|
+//@[79:80)    RightSquare |]|
+//@[80:81)   Dot |.|
+//@[81:89)   IdentifierSyntax
+//@[81:89)    Identifier |location|
+//@[89:90) NewLine |\n|
+output existingIndexedResourceAccessTier string = existingStorageAccounts[index%3].properties.accessTier
+//@[0:104) OutputDeclarationSyntax
+//@[0:6)  Identifier |output|
+//@[7:40)  IdentifierSyntax
+//@[7:40)   Identifier |existingIndexedResourceAccessTier|
+//@[41:47)  TypeSyntax
+//@[41:47)   Identifier |string|
+//@[48:49)  Assignment |=|
+//@[50:104)  PropertyAccessSyntax
+//@[50:93)   PropertyAccessSyntax
+//@[50:82)    ArrayAccessSyntax
+//@[50:73)     VariableAccessSyntax
+//@[50:73)      IdentifierSyntax
+//@[50:73)       Identifier |existingStorageAccounts|
+//@[73:74)     LeftSquare |[|
+//@[74:81)     BinaryOperationSyntax
+//@[74:79)      VariableAccessSyntax
+//@[74:79)       IdentifierSyntax
+//@[74:79)        Identifier |index|
+//@[79:80)      Modulo |%|
+//@[80:81)      IntegerLiteralSyntax
+//@[80:81)       Integer |3|
+//@[81:82)     RightSquare |]|
+//@[82:83)    Dot |.|
+//@[83:93)    IdentifierSyntax
+//@[83:93)     Identifier |properties|
+//@[93:94)   Dot |.|
+//@[94:104)   IdentifierSyntax
+//@[94:104)    Identifier |accessTier|
+//@[104:104) EndOfFile ||

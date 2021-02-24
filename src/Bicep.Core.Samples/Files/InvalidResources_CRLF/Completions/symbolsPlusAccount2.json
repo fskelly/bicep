@@ -414,6 +414,62 @@
     }
   },
   {
+    "label": "directRefViaSingleConditionalResourceBody",
+    "kind": "interface",
+    "detail": "directRefViaSingleConditionalResourceBody",
+    "deprecated": false,
+    "preselect": false,
+    "sortText": "2_directRefViaSingleConditionalResourceBody",
+    "insertTextFormat": "plainText",
+    "insertTextMode": "asIs",
+    "textEdit": {
+      "range": {},
+      "newText": "directRefViaSingleConditionalResourceBody"
+    }
+  },
+  {
+    "label": "directRefViaSingleLoopResourceBody",
+    "kind": "interface",
+    "detail": "directRefViaSingleLoopResourceBody",
+    "deprecated": false,
+    "preselect": false,
+    "sortText": "2_directRefViaSingleLoopResourceBody",
+    "insertTextFormat": "plainText",
+    "insertTextMode": "asIs",
+    "textEdit": {
+      "range": {},
+      "newText": "directRefViaSingleLoopResourceBody"
+    }
+  },
+  {
+    "label": "directRefViaSingleResourceBody",
+    "kind": "interface",
+    "detail": "directRefViaSingleResourceBody",
+    "deprecated": false,
+    "preselect": false,
+    "sortText": "2_directRefViaSingleResourceBody",
+    "insertTextFormat": "plainText",
+    "insertTextMode": "asIs",
+    "textEdit": {
+      "range": {},
+      "newText": "directRefViaSingleResourceBody"
+    }
+  },
+  {
+    "label": "directRefViaVar",
+    "kind": "variable",
+    "detail": "directRefViaVar",
+    "deprecated": false,
+    "preselect": false,
+    "sortText": "2_directRefViaVar",
+    "insertTextFormat": "plainText",
+    "insertTextMode": "asIs",
+    "textEdit": {
+      "range": {},
+      "newText": "directRefViaVar"
+    }
+  },
+  {
     "label": "discriminatorKeyMissing",
     "kind": "interface",
     "detail": "discriminatorKeyMissing",

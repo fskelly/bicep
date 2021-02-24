@@ -2231,6 +2231,249 @@ module nonexistentArrays 'modulea.bicep' = [for evenMoreDuplicates in alsoDoesNo
 }]
 //@[0:1)    RightBrace |}|
 //@[1:2)   RightSquare |]|
-//@[2:3) NewLine |\n|
+//@[2:4) NewLine |\n\n|
 
-//@[0:0) EndOfFile ||
+output directRefToCollectionViaOutput array = nonexistentArrays
+//@[0:63) OutputDeclarationSyntax
+//@[0:6)  Identifier |output|
+//@[7:37)  IdentifierSyntax
+//@[7:37)   Identifier |directRefToCollectionViaOutput|
+//@[38:43)  TypeSyntax
+//@[38:43)   Identifier |array|
+//@[44:45)  Assignment |=|
+//@[46:63)  VariableAccessSyntax
+//@[46:63)   IdentifierSyntax
+//@[46:63)    Identifier |nonexistentArrays|
+//@[63:65) NewLine |\n\n|
+
+module directRefToCollectionViaSingleBody 'modulea.bicep' = {
+//@[0:203) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:41)  IdentifierSyntax
+//@[7:41)   Identifier |directRefToCollectionViaSingleBody|
+//@[42:57)  StringSyntax
+//@[42:57)   StringComplete |'modulea.bicep'|
+//@[58:59)  Assignment |=|
+//@[60:203)  ObjectSyntax
+//@[60:61)   LeftBrace |{|
+//@[61:62)   NewLine |\n|
+  name: 'hello'
+//@[2:15)   ObjectPropertySyntax
+//@[2:6)    IdentifierSyntax
+//@[2:6)     Identifier |name|
+//@[6:7)    Colon |:|
+//@[8:15)    StringSyntax
+//@[8:15)     StringComplete |'hello'|
+//@[15:16)   NewLine |\n|
+  params: {
+//@[2:123)   ObjectPropertySyntax
+//@[2:8)    IdentifierSyntax
+//@[2:8)     Identifier |params|
+//@[8:9)    Colon |:|
+//@[10:123)    ObjectSyntax
+//@[10:11)     LeftBrace |{|
+//@[11:12)     NewLine |\n|
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+//@[4:69)     ObjectPropertySyntax
+//@[4:14)      IdentifierSyntax
+//@[4:14)       Identifier |arrayParam|
+//@[14:15)      Colon |:|
+//@[16:69)      FunctionCallSyntax
+//@[16:22)       IdentifierSyntax
+//@[16:22)        Identifier |concat|
+//@[22:23)       LeftParen |(|
+//@[23:50)       FunctionArgumentSyntax
+//@[23:49)        VariableAccessSyntax
+//@[23:49)         IdentifierSyntax
+//@[23:49)          Identifier |wrongModuleParameterInLoop|
+//@[49:50)        Comma |,|
+//@[51:68)       FunctionArgumentSyntax
+//@[51:68)        VariableAccessSyntax
+//@[51:68)         IdentifierSyntax
+//@[51:68)          Identifier |nonexistentArrays|
+//@[68:69)       RightParen |)|
+//@[69:70)     NewLine |\n|
+    objParam: {}
+//@[4:16)     ObjectPropertySyntax
+//@[4:12)      IdentifierSyntax
+//@[4:12)       Identifier |objParam|
+//@[12:13)      Colon |:|
+//@[14:16)      ObjectSyntax
+//@[14:15)       LeftBrace |{|
+//@[15:16)       RightBrace |}|
+//@[16:17)     NewLine |\n|
+    stringParamB: ''
+//@[4:20)     ObjectPropertySyntax
+//@[4:16)      IdentifierSyntax
+//@[4:16)       Identifier |stringParamB|
+//@[16:17)      Colon |:|
+//@[18:20)      StringSyntax
+//@[18:20)       StringComplete |''|
+//@[20:21)     NewLine |\n|
+  }
+//@[2:3)     RightBrace |}|
+//@[3:4)   NewLine |\n|
+}
+//@[0:1)   RightBrace |}|
+//@[1:3) NewLine |\n\n|
+
+module directRefToCollectionViaSingleConditionalBody 'modulea.bicep' = if(true) {
+//@[0:224) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:52)  IdentifierSyntax
+//@[7:52)   Identifier |directRefToCollectionViaSingleConditionalBody|
+//@[53:68)  StringSyntax
+//@[53:68)   StringComplete |'modulea.bicep'|
+//@[69:70)  Assignment |=|
+//@[71:224)  IfConditionSyntax
+//@[71:73)   Identifier |if|
+//@[73:79)   ParenthesizedExpressionSyntax
+//@[73:74)    LeftParen |(|
+//@[74:78)    BooleanLiteralSyntax
+//@[74:78)     TrueKeyword |true|
+//@[78:79)    RightParen |)|
+//@[80:224)   ObjectSyntax
+//@[80:81)    LeftBrace |{|
+//@[81:82)    NewLine |\n|
+  name: 'hello2'
+//@[2:16)    ObjectPropertySyntax
+//@[2:6)     IdentifierSyntax
+//@[2:6)      Identifier |name|
+//@[6:7)     Colon |:|
+//@[8:16)     StringSyntax
+//@[8:16)      StringComplete |'hello2'|
+//@[16:17)    NewLine |\n|
+  params: {
+//@[2:123)    ObjectPropertySyntax
+//@[2:8)     IdentifierSyntax
+//@[2:8)      Identifier |params|
+//@[8:9)     Colon |:|
+//@[10:123)     ObjectSyntax
+//@[10:11)      LeftBrace |{|
+//@[11:12)      NewLine |\n|
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+//@[4:69)      ObjectPropertySyntax
+//@[4:14)       IdentifierSyntax
+//@[4:14)        Identifier |arrayParam|
+//@[14:15)       Colon |:|
+//@[16:69)       FunctionCallSyntax
+//@[16:22)        IdentifierSyntax
+//@[16:22)         Identifier |concat|
+//@[22:23)        LeftParen |(|
+//@[23:50)        FunctionArgumentSyntax
+//@[23:49)         VariableAccessSyntax
+//@[23:49)          IdentifierSyntax
+//@[23:49)           Identifier |wrongModuleParameterInLoop|
+//@[49:50)         Comma |,|
+//@[51:68)        FunctionArgumentSyntax
+//@[51:68)         VariableAccessSyntax
+//@[51:68)          IdentifierSyntax
+//@[51:68)           Identifier |nonexistentArrays|
+//@[68:69)        RightParen |)|
+//@[69:70)      NewLine |\n|
+    objParam: {}
+//@[4:16)      ObjectPropertySyntax
+//@[4:12)       IdentifierSyntax
+//@[4:12)        Identifier |objParam|
+//@[12:13)       Colon |:|
+//@[14:16)       ObjectSyntax
+//@[14:15)        LeftBrace |{|
+//@[15:16)        RightBrace |}|
+//@[16:17)      NewLine |\n|
+    stringParamB: ''
+//@[4:20)      ObjectPropertySyntax
+//@[4:16)       IdentifierSyntax
+//@[4:16)        Identifier |stringParamB|
+//@[16:17)       Colon |:|
+//@[18:20)       StringSyntax
+//@[18:20)        StringComplete |''|
+//@[20:21)      NewLine |\n|
+  }
+//@[2:3)      RightBrace |}|
+//@[3:4)    NewLine |\n|
+}
+//@[0:1)    RightBrace |}|
+//@[1:3) NewLine |\n\n|
+
+module directRefToCollectionViaLoopBody 'modulea.bicep' = [for test in []: {
+//@[0:220) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:39)  IdentifierSyntax
+//@[7:39)   Identifier |directRefToCollectionViaLoopBody|
+//@[40:55)  StringSyntax
+//@[40:55)   StringComplete |'modulea.bicep'|
+//@[56:57)  Assignment |=|
+//@[58:220)  ForSyntax
+//@[58:59)   LeftSquare |[|
+//@[59:62)   Identifier |for|
+//@[63:67)   LocalVariableSyntax
+//@[63:67)    IdentifierSyntax
+//@[63:67)     Identifier |test|
+//@[68:70)   Identifier |in|
+//@[71:73)   ArraySyntax
+//@[71:72)    LeftSquare |[|
+//@[72:73)    RightSquare |]|
+//@[73:74)   Colon |:|
+//@[75:219)   ObjectSyntax
+//@[75:76)    LeftBrace |{|
+//@[76:77)    NewLine |\n|
+  name: 'hello3'
+//@[2:16)    ObjectPropertySyntax
+//@[2:6)     IdentifierSyntax
+//@[2:6)      Identifier |name|
+//@[6:7)     Colon |:|
+//@[8:16)     StringSyntax
+//@[8:16)      StringComplete |'hello3'|
+//@[16:17)    NewLine |\n|
+  params: {
+//@[2:123)    ObjectPropertySyntax
+//@[2:8)     IdentifierSyntax
+//@[2:8)      Identifier |params|
+//@[8:9)     Colon |:|
+//@[10:123)     ObjectSyntax
+//@[10:11)      LeftBrace |{|
+//@[11:12)      NewLine |\n|
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+//@[4:69)      ObjectPropertySyntax
+//@[4:14)       IdentifierSyntax
+//@[4:14)        Identifier |arrayParam|
+//@[14:15)       Colon |:|
+//@[16:69)       FunctionCallSyntax
+//@[16:22)        IdentifierSyntax
+//@[16:22)         Identifier |concat|
+//@[22:23)        LeftParen |(|
+//@[23:50)        FunctionArgumentSyntax
+//@[23:49)         VariableAccessSyntax
+//@[23:49)          IdentifierSyntax
+//@[23:49)           Identifier |wrongModuleParameterInLoop|
+//@[49:50)         Comma |,|
+//@[51:68)        FunctionArgumentSyntax
+//@[51:68)         VariableAccessSyntax
+//@[51:68)          IdentifierSyntax
+//@[51:68)           Identifier |nonexistentArrays|
+//@[68:69)        RightParen |)|
+//@[69:70)      NewLine |\n|
+    objParam: {}
+//@[4:16)      ObjectPropertySyntax
+//@[4:12)       IdentifierSyntax
+//@[4:12)        Identifier |objParam|
+//@[12:13)       Colon |:|
+//@[14:16)       ObjectSyntax
+//@[14:15)        LeftBrace |{|
+//@[15:16)        RightBrace |}|
+//@[16:17)      NewLine |\n|
+    stringParamB: ''
+//@[4:20)      ObjectPropertySyntax
+//@[4:16)       IdentifierSyntax
+//@[4:16)        Identifier |stringParamB|
+//@[16:17)       Colon |:|
+//@[18:20)       StringSyntax
+//@[18:20)        StringComplete |''|
+//@[20:21)      NewLine |\n|
+  }
+//@[2:3)      RightBrace |}|
+//@[3:4)    NewLine |\n|
+}]
+//@[0:1)    RightBrace |}|
+//@[1:2)   RightSquare |]|
+//@[2:2) EndOfFile ||

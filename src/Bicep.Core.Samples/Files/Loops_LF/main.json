@@ -471,13 +471,37 @@
     "indexedModuleOutput": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', variables('moduleSetup')[mul(parameters('index'), 1)]), '2019-10-01').outputs.myOutput.value]"
+    },
+    "existingIndexedResourceName": {
+      "type": "string",
+      "value": "[format('{0}-existing-{1}', parameters('name'), parameters('accounts')[mul(parameters('index'), 0)].name)]"
+    },
+    "existingIndexedResourceId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Storage/storageAccounts', format('{0}-existing-{1}', parameters('name'), parameters('accounts')[mul(parameters('index'), 1)].name))]"
+    },
+    "existingIndexedResourceType": {
+      "type": "string",
+      "value": "Microsoft.Storage/storageAccounts"
+    },
+    "existingIndexedResourceApiVersion": {
+      "type": "string",
+      "value": "2019-06-01"
+    },
+    "existingIndexedResourceLocation": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Storage/storageAccounts', format('{0}-existing-{1}', parameters('name'), parameters('accounts')[div(parameters('index'), 2)].name)), '2019-06-01', 'full').location]"
+    },
+    "existingIndexedResourceAccessTier": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Storage/storageAccounts', format('{0}-existing-{1}', parameters('name'), parameters('accounts')[mod(parameters('index'), 3)].name)), '2019-06-01').accessTier]"
     }
   },
   "metadata": {
     "_generator": {
       "name": "bicep",
       "version": "dev",
-      "templateHash": "17470455438705378084"
+      "templateHash": "7828277547008831941"
     }
   }
 }

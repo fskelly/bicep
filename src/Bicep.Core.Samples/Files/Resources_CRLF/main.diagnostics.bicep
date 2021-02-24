@@ -349,4 +349,3 @@ resource duplicateInGlobalAndTwoLoops 'Microsoft.Network/virtualNetworks@2020-06
     }]
   }
 }]
-

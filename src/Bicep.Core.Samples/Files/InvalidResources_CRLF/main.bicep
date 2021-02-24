@@ -970,3 +970,29 @@ resource premiumStorages 'Microsoft.Storage/storageAccounts@2019-06-01' = [for a
   }
   kind: 'StorageV2'
 }]
+
+var directRefViaVar = premiumStorages
+output directRefViaOutput array = union(premiumStorages, stuffs)
+
+resource directRefViaSingleResourceBody 'Microsoft.Network/dnszones@2018-05-01' = {
+  name: 'myZone2'
+  location: 'global'
+  properties: {
+    registrationVirtualNetworks: premiumStorages
+  }
+}
+
+resource directRefViaSingleConditionalResourceBody 'Microsoft.Network/dnszones@2018-05-01' = if(true) {
+  name: 'myZone3'
+  location: 'global'
+  properties: {
+    registrationVirtualNetworks: concat(premiumStorages, stuffs)
+  }
+}
+
+resource directRefViaSingleLoopResourceBody 'Microsoft.Network/virtualNetworks@2020-06-01' = [for i in range(0, 3): {
+  name: 'vnet-${i}'
+  properties: {
+    subnets: premiumStorages
+  }
+}]

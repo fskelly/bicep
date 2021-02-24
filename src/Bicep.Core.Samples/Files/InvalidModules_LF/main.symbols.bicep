@@ -444,3 +444,36 @@ module nonexistentArrays 'modulea.bicep' = [for evenMoreDuplicates in alsoDoesNo
   }
 }]
 
+output directRefToCollectionViaOutput array = nonexistentArrays
+//@[7:37) Output directRefToCollectionViaOutput. Type: array. Declaration start char: 0, length: 63
+
+module directRefToCollectionViaSingleBody 'modulea.bicep' = {
+//@[7:41) Module directRefToCollectionViaSingleBody. Type: module. Declaration start char: 0, length: 203
+  name: 'hello'
+  params: {
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+    objParam: {}
+    stringParamB: ''
+  }
+}
+
+module directRefToCollectionViaSingleConditionalBody 'modulea.bicep' = if(true) {
+//@[7:52) Module directRefToCollectionViaSingleConditionalBody. Type: module. Declaration start char: 0, length: 224
+  name: 'hello2'
+  params: {
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+    objParam: {}
+    stringParamB: ''
+  }
+}
+
+module directRefToCollectionViaLoopBody 'modulea.bicep' = [for test in []: {
+//@[63:67) Local test. Type: any. Declaration start char: 63, length: 4
+//@[7:39) Module directRefToCollectionViaLoopBody. Type: module[]. Declaration start char: 0, length: 220
+  name: 'hello3'
+  params: {
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+    objParam: {}
+    stringParamB: ''
+  }
+}]

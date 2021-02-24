@@ -247,3 +247,15 @@ module moduleCollectionWithIndexedDependencies 'passthrough.bicep' = [for module
 
 output indexedModulesName string = moduleCollectionWithSingleDependency[index].name
 output indexedModuleOutput string = moduleCollectionWithSingleDependency[index * 1].outputs.myOutput
+
+// resource collection
+resource existingStorageAccounts 'Microsoft.Storage/storageAccounts@2019-06-01' existing = [for account in accounts: {
+  name: '${name}-existing-${account.name}'
+}]
+
+output existingIndexedResourceName string = existingStorageAccounts[index * 0].name
+output existingIndexedResourceId string = existingStorageAccounts[index * 1].id
+output existingIndexedResourceType string = existingStorageAccounts[index+2].type
+output existingIndexedResourceApiVersion string = existingStorageAccounts[index-7].apiVersion
+output existingIndexedResourceLocation string = existingStorageAccounts[index/2].location
+output existingIndexedResourceAccessTier string = existingStorageAccounts[index%3].properties.accessTier

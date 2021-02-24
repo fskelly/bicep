@@ -460,3 +460,38 @@ module nonexistentArrays 'modulea.bicep' = [for evenMoreDuplicates in alsoDoesNo
   }
 }]
 
+output directRefToCollectionViaOutput array = nonexistentArrays
+//@[46:63) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |nonexistentArrays|
+
+module directRefToCollectionViaSingleBody 'modulea.bicep' = {
+  name: 'hello'
+  params: {
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+//@[23:49) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |wrongModuleParameterInLoop|
+//@[51:68) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |nonexistentArrays|
+    objParam: {}
+    stringParamB: ''
+  }
+}
+
+module directRefToCollectionViaSingleConditionalBody 'modulea.bicep' = if(true) {
+  name: 'hello2'
+  params: {
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+//@[23:49) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |wrongModuleParameterInLoop|
+//@[51:68) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |nonexistentArrays|
+    objParam: {}
+    stringParamB: ''
+  }
+}
+
+module directRefToCollectionViaLoopBody 'modulea.bicep' = [for test in []: {
+  name: 'hello3'
+  params: {
+    arrayParam: concat(wrongModuleParameterInLoop, nonexistentArrays)
+//@[23:49) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |wrongModuleParameterInLoop|
+//@[51:68) [BCP144 (Error)] Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression. |nonexistentArrays|
+    objParam: {}
+    stringParamB: ''
+  }
+}]
